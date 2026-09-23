@@ -17,8 +17,8 @@ class PublicCalculatorTest extends TestCase
         $response = $this->get(route('calculator.index'));
 
         $response->assertOk();
-        $response->assertSee('Rencana Rute Perjalanan Bali');
-        $response->assertSee('Titik Jemput (Pickup)');
+        $response->assertSee(__('calculator.title'));
+        $response->assertSee(__('calculator.pickup_step'));
         $response->assertSee('Bandara Internasional I Gusti Ngurah Rai (DPS)');
     }
 
@@ -88,8 +88,8 @@ class PublicCalculatorTest extends TestCase
         $response = $this->get(route('calculator.index'));
 
         $response->assertOk();
-        $response->assertSee('Mode Rute Berbasis Daftar');
-        $response->assertSee('Pratinjau peta Google Maps interaktif sedang tidak aktif');
+        $response->assertSee(__('calculator.map_fallback_title'));
+        $response->assertSee(__('calculator.map_fallback_desc'));
     }
 
     /**

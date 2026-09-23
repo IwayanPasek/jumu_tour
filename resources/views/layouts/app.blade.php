@@ -40,7 +40,7 @@
 <body class="d-flex flex-column h-100">
     <!-- Accessibility Skip Link (WCAG 2.2) -->
     <a href="#main-content" class="skip-to-content">
-        Lewati ke Konten Utama
+        {{ __('common.skip_to_content') }}
     </a>
 
     <!-- Navbar Global -->

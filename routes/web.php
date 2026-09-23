@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
+// Language Switcher
+Route::get('/language/{locale}', [\App\Http\Controllers\LanguageController::class, 'switch'])->name('language.switch');
+
 // Beranda
 Route::get('/', [PublicHomeController::class, 'index'])->name('home');
 

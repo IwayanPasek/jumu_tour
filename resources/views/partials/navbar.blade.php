@@ -21,38 +21,43 @@
                     <a class="nav-link fw-semibold px-3 py-2 text-white {{ request()->routeIs('home') ? 'active' : 'opacity-75' }}" 
                        aria-current="{{ request()->routeIs('home') ? 'page' : 'false' }}" 
                        href="{{ route('home') }}">
-                        Beranda
+                        {{ __('nav.home') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link fw-semibold px-3 py-2 text-white {{ request()->routeIs('regions.*') ? 'active' : 'opacity-75' }}" 
                        aria-current="{{ request()->routeIs('regions.*') ? 'page' : 'false' }}" 
                        href="{{ route('regions.index') }}">
-                        Daerah
+                        {{ __('nav.regions') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link fw-semibold px-3 py-2 text-white {{ request()->routeIs('categories.*') ? 'active' : 'opacity-75' }}" 
                        aria-current="{{ request()->routeIs('categories.*') ? 'page' : 'false' }}" 
                        href="{{ route('categories.index') }}">
-                        Kategori
+                        {{ __('nav.categories') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link fw-semibold px-3 py-2 text-white {{ request()->routeIs('destinations.*') ? 'active' : 'opacity-75' }}" 
                        aria-current="{{ request()->routeIs('destinations.*') ? 'page' : 'false' }}" 
                        href="{{ route('destinations.index') }}">
-                        Destinasi
+                        {{ __('nav.destinations') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link fw-semibold px-3 py-2 text-white {{ request()->routeIs('calculator.*') ? 'active' : 'opacity-75' }}" 
                        aria-current="{{ request()->routeIs('calculator.*') ? 'page' : 'false' }}" 
                        href="{{ route('calculator.index') }}">
-                        Rencana Rute
+                        {{ __('nav.calculator') }}
                     </a>
                 </li>
                 
+                <!-- Language Switcher Component -->
+                <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                    <x-language-switcher />
+                </li>
+
                 <!-- CTA Button WhatsApp / Kontak -->
                 <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
                     @if ($brand['has_valid_whatsapp'])
@@ -60,18 +65,18 @@
                            target="_blank" 
                            rel="noopener noreferrer"
                            class="btn btn-brand-secondary px-3 py-2 rounded-pill d-inline-flex align-items-center gap-2 shadow-sm"
-                           aria-label="Hubungi WhatsApp {{ $brand['name'] }}">
+                           aria-label="{{ __('nav.contact') }} {{ $brand['name'] }}">
                             <i class="bi bi-whatsapp"></i>
-                            <span>Hubungi Kami</span>
+                            <span>{{ __('nav.contact') }}</span>
                         </a>
                     @else
                         <button type="button" 
                                 class="btn btn-outline-light px-3 py-2 rounded-pill d-inline-flex align-items-center gap-2 small opacity-75" 
                                 data-bs-toggle="modal" 
                                 data-bs-target="#contactInfoModal"
-                                aria-label="Informasi Kontak">
+                                aria-label="{{ __('nav.contact') }}">
                             <i class="bi bi-chat-dots"></i>
-                            <span>Hubungi Kami</span>
+                            <span>{{ __('nav.contact') }}</span>
                         </button>
                     @endif
                 </li>

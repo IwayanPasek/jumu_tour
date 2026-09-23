@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Masuk Administrator - {{ $brand['name'] ?? 'Bali Tour Service' }}</title>
+    <title>{{ __('auth.login_title') }} - {{ $brand['name'] ?? 'Bali Tour Service' }}</title>
 
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +32,11 @@
         }
     </style>
 </head>
-<body class="d-flex align-items-center justify-content-center min-vh-100 py-4">
+<body class="d-flex align-items-center justify-content-center min-vh-100 py-4 position-relative">
+    <div class="position-absolute top-0 end-0 p-3">
+        <x-language-switcher />
+    </div>
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-7 col-lg-5 col-xl-4">
@@ -40,7 +44,7 @@
                     <div class="badge rounded-circle p-3 text-dark bg-brand-secondary shadow-lg mb-2">
                         <i class="bi bi-shield-lock-fill fs-2"></i>
                     </div>
-                    <h3 class="fw-bold text-white mb-1">Portal Administrator</h3>
+                    <h3 class="fw-bold text-white mb-1">{{ __('admin.portal_title') }}</h3>
                     <p class="text-white-50 small mb-0">{{ $brand['name'] ?? 'Bali Tour Service' }}</p>
                 </div>
 
@@ -53,7 +57,7 @@
 
                         <!-- Email Input -->
                         <div class="mb-3">
-                            <label for="email" class="form-label fw-semibold text-dark small">Alamat Email</label>
+                            <label for="email" class="form-label fw-semibold text-dark small">{{ __('auth.email_label') }}</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0 text-muted">
                                     <i class="bi bi-envelope"></i>
@@ -77,7 +81,7 @@
 
                         <!-- Password Input -->
                         <div class="mb-3">
-                            <label for="password" class="form-label fw-semibold text-dark small">Kata Sandi</label>
+                            <label for="password" class="form-label fw-semibold text-dark small">{{ __('auth.password_label') }}</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0 text-muted">
                                     <i class="bi bi-key"></i>
@@ -101,13 +105,13 @@
                         <div class="mb-4 form-check">
                             <input type="checkbox" class="form-check-input" id="remember" name="remember" value="1">
                             <label class="form-check-label text-muted small" for="remember">
-                                Ingat sesi saya di perangkat ini
+                                {{ __('auth.remember_me') }}
                             </label>
                         </div>
 
                         <!-- Submit Button -->
                         <button type="submit" class="btn btn-brand-primary w-100 py-2 fw-semibold rounded-pill shadow-sm">
-                            <i class="bi bi-box-arrow-in-right me-1"></i> Masuk ke Dashboard
+                            <i class="bi bi-box-arrow-in-right me-1"></i> {{ __('auth.login_button') }}
                         </button>
                     </form>
 
@@ -116,14 +120,14 @@
                     <div class="text-center">
                         <a href="{{ route('home') }}" class="text-decoration-none text-muted small hover-text-dark d-inline-flex align-items-center gap-1">
                             <i class="bi bi-arrow-left"></i>
-                            <span>Kembali ke Beranda Website</span>
+                            <span>{{ __('auth.back_to_public') }}</span>
                         </a>
                     </div>
                 </div>
 
                 <div class="text-center mt-4">
                     <p class="text-white-50 small mb-0">
-                        &copy; {{ date('Y') }} {{ $brand['name'] ?? 'Bali Tour Service' }}. Akses Terbatas.
+                        &copy; {{ date('Y') }} {{ $brand['name'] ?? 'Bali Tour Service' }}. {{ __('auth.restricted_access') }}
                     </p>
                 </div>
             </div>

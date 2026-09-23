@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Kategori: ' . e($category->name) . ' - ' . e($brand['name']))
-@section('meta_description', 'Daftar destinasi dan tempat wisata di Bali dalam kategori ' . e($category->name) . '.')
+@section('title', e($category->name) . ' - ' . __('categories.title'))
+@section('meta_description', Str::limit(strip_tags($category->description ?? 'List of destinations in ' . $category->name . ' Bali.'), 150))
 
 @section('content')
 <!-- Header Detail Kategori -->
@@ -9,15 +9,15 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-2">
-                <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-white-50 text-decoration-none">Beranda</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('categories.index') }}" class="text-white-50 text-decoration-none">Kategori</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-white-50 text-decoration-none">{{ __('nav.home') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('categories.index') }}" class="text-white-50 text-decoration-none">{{ __('nav.categories') }}</a></li>
                 <li class="breadcrumb-item active text-brand-secondary" aria-current="page">{{ $category->name }}</li>
             </ol>
         </nav>
 
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
             <div>
-                <h1 class="fw-bold mb-1 display-6">Wisata {{ $category->name }} di Bali</h1>
+                <h1 class="fw-bold mb-1 display-6">{{ $category->name }}</h1>
                 @if (!empty($category->description))
                     <p class="text-white-50 mb-0 lead fs-6 max-w-700">
                         {{ $category->description }}
@@ -27,7 +27,7 @@
             <div>
                 <a href="{{ route('categories.index') }}" class="btn btn-outline-light btn-sm rounded-pill px-3 py-2 d-inline-flex align-items-center gap-2">
                     <i class="bi bi-arrow-left"></i>
-                    <span>Semua Kategori</span>
+                    <span>{{ __('categories.all_categories') }}</span>
                 </a>
             </div>
         </div>
@@ -38,8 +38,8 @@
 <section class="py-5">
     <div class="container">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h4 class="fw-bold text-dark mb-0">Destinasi {{ $category->name }}</h4>
-            <span class="text-muted small">Menampilkan {{ $destinations->total() }} tempat wisata</span>
+            <h4 class="fw-bold text-dark mb-0">{{ __('categories.destinations_in_category', ['category' => $category->name]) }}</h4>
+            <span class="text-muted small">{{ __('categories.showing_count', ['count' => $destinations->total()]) }}</span>
         </div>
 
         @if ($destinations->count() > 0)
@@ -63,13 +63,13 @@
                 <div class="icon-circle bg-light text-muted mx-auto mb-3" style="width: 72px; height: 72px;">
                     <i class="bi bi-tag fs-1"></i>
                 </div>
-                <h4 class="fw-bold text-dark mb-2">Belum Ada Destinasi untuk Kategori Ini</h4>
+                <h4 class="fw-bold text-dark mb-2">{{ __('categories.empty') }}</h4>
                 <p class="text-muted small max-w-500 mx-auto mb-4">
-                    Destinasi dengan kategori {{ $category->name }} sedang dipersiapkan. Silakan lihat pilihan kategori menarik lainnya.
+                    {{ __('categories.empty_desc') }}
                 </p>
                 <div>
                     <a href="{{ route('categories.index') }}" class="btn btn-brand-primary btn-sm rounded-pill px-4 py-2">
-                        Pilih Kategori Lain
+                        {{ __('categories.choose_other') }}
                     </a>
                 </div>
             </div>

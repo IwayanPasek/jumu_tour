@@ -16,7 +16,7 @@ class AdminAuthTest extends TestCase
         $response = $this->get(route('admin.login'));
 
         $response->assertStatus(200);
-        $response->assertSee('Portal Administrator');
+        $response->assertSee(__('admin.portal_title'));
         $response->assertSee('name="email"', false);
         $response->assertSee('name="password"', false);
     }
@@ -144,10 +144,10 @@ class AdminAuthTest extends TestCase
         $response = $this->actingAs($admin)->get(route('admin.dashboard'));
 
         $response->assertStatus(200);
-        $response->assertSee('Selamat Datang, ' . $admin->name);
-        $response->assertSee('Daerah Wisata');
-        $response->assertSee('Kategori Wisata');
-        $response->assertSee('Tempat Wisata');
+        $response->assertSee(__('admin.welcome', ['name' => $admin->name]));
+        $response->assertSee(__('admin.total_regions'));
+        $response->assertSee(__('admin.total_categories'));
+        $response->assertSee(__('admin.total_destinations'));
     }
 
     /**

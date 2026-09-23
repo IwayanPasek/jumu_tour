@@ -64,7 +64,7 @@
 </head>
 <body class="bg-light d-flex flex-column h-100">
     <!-- Aksesibilitas WCAG: Skip to Main Content -->
-    <a href="#admin-main-content" class="skip-to-content">Lewati ke Konten Admin</a>
+    <a href="#admin-main-content" class="skip-to-content">{{ __('common.skip_to_content') }}</a>
 
     <div class="d-flex flex-column flex-lg-row min-vh-100">
         <!-- Sidebar Navigation -->
@@ -77,7 +77,7 @@
                     </span>
                     <div>
                         <h6 class="fw-bold mb-0 text-white">{{ $brand['name'] ?? 'Bali Tour Service' }}</h6>
-                        <small class="text-white-50" style="font-size: 0.75rem;">Panel Administrator</small>
+                        <small class="text-white-50" style="font-size: 0.75rem;">{{ __('admin.panel_title') }}</small>
                     </div>
                 </div>
                 <!-- Mobile Toggler Button -->
@@ -87,7 +87,7 @@
                         data-bs-target="#adminSidebarCollapse" 
                         aria-controls="adminSidebarCollapse" 
                         aria-expanded="false" 
-                        aria-label="Buka navigasi panel admin">
+                        aria-label="{{ __('admin.panel_title') }}">
                     <i class="bi bi-list fs-5"></i>
                 </button>
             </div>
@@ -101,35 +101,35 @@
                     <a href="{{ route('admin.dashboard') }}" 
                        class="admin-nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                         <i class="bi bi-speedometer2"></i>
-                        <span>Dashboard</span>
+                        <span>{{ __('admin.dashboard') }}</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.regions.index') }}" 
                        class="admin-nav-link {{ request()->routeIs('admin.regions.*') ? 'active' : '' }}">
                         <i class="bi bi-geo-alt"></i>
-                        <span>Kelola Daerah</span>
+                        <span>{{ __('admin.manage_regions') }}</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.categories.index') }}" 
                        class="admin-nav-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
                         <i class="bi bi-tags"></i>
-                        <span>Kelola Kategori</span>
+                        <span>{{ __('admin.manage_categories') }}</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.destinations.index') }}" 
                        class="admin-nav-link {{ request()->routeIs('admin.destinations.*') ? 'active' : '' }}">
                         <i class="bi bi-pin-map"></i>
-                        <span>Kelola Destinasi</span>
+                        <span>{{ __('admin.manage_destinations') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="admin-nav-link disabled justify-content-between">
                         <div class="d-flex align-items-center gap-2">
                             <i class="bi bi-cash-stack"></i>
-                            <span>Pengaturan Tarif</span>
+                            <span>{{ __('admin.rates_setting') }}</span>
                         </div>
                         <span class="badge bg-secondary-subtle text-secondary small py-0 px-1" style="font-size: 0.65rem;">Segera</span>
                     </a>
@@ -138,7 +138,7 @@
                     <a href="#" class="admin-nav-link disabled justify-content-between">
                         <div class="d-flex align-items-center gap-2">
                             <i class="bi bi-palette"></i>
-                            <span>Pengaturan Brand</span>
+                            <span>{{ __('admin.brand_setting') }}</span>
                         </div>
                         <span class="badge bg-secondary-subtle text-secondary small py-0 px-1" style="font-size: 0.65rem;">Segera</span>
                     </a>
@@ -151,14 +151,14 @@
             <div class="d-flex flex-column gap-2 px-2">
                 <a href="{{ route('home') }}" target="_blank" class="admin-nav-link text-white-50">
                     <i class="bi bi-box-arrow-up-right"></i>
-                    <span>Kunjungi Website</span>
+                    <span>{{ __('admin.visit_website') }}</span>
                 </a>
                 
                 <form method="POST" action="{{ route('admin.logout') }}" class="m-0">
                     @csrf
                     <button type="submit" class="admin-nav-link w-100 text-start border-0 bg-transparent text-danger">
                         <i class="bi bi-box-arrow-left"></i>
-                        <span>Keluar (Logout)</span>
+                        <span>{{ __('admin.logout') }}</span>
                     </button>
                 </form>
             </div>
@@ -171,14 +171,15 @@
             <header class="navbar navbar-expand bg-white border-bottom shadow-sm px-4 py-3">
                 <div class="d-flex align-items-center justify-content-between w-100">
                     <div>
-                        <span class="text-muted small">Status Sistem:</span>
+                        <span class="text-muted small">{{ __('admin.system_status') }}</span>
                         <span class="badge bg-success-subtle text-success border border-success-subtle ms-1">
-                            <i class="bi bi-check-circle me-1"></i>Administrator Terautentikasi
+                            <i class="bi bi-check-circle me-1"></i>{{ __('admin.auth_admin') }}
                         </span>
                     </div>
 
-                    <!-- User Profile Dropdown -->
+                    <!-- User Profile & Language Switcher Dropdown -->
                     <div class="d-flex align-items-center gap-3">
+                        <x-language-switcher />
                         <div class="text-end d-none d-sm-block">
                             <div class="fw-semibold text-dark small">{{ Auth::user()->name }}</div>
                             <div class="text-muted" style="font-size: 0.75rem;">{{ Auth::user()->email }}</div>

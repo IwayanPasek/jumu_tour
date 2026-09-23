@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Kalkulator Rute & Peta Wisata Bali - ' . ($brand['name'] ?? 'Bali Tour Service'))
-@section('meta_description', 'Rencanakan rute liburan Anda di Bali, pilih titik jemput dan hingga 5 tempat wisata favorit dengan perhitungan jarak dan durasi Google Routes API.')
+@section('title', __('calculator.title') . ' - ' . ($brand['name'] ?? 'Bali Tour Service'))
+@section('meta_description', __('calculator.subtitle'))
 
 @section('content')
 <!-- Page Header -->
@@ -9,13 +9,13 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-2">
-                <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-white-50 text-decoration-none">Beranda</a></li>
-                <li class="breadcrumb-item active text-brand-secondary" aria-current="page">Kalkulator Rute Wisata</li>
+                <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-white-50 text-decoration-none">{{ __('nav.home') }}</a></li>
+                <li class="breadcrumb-item active text-brand-secondary" aria-current="page">{{ __('nav.calculator') }}</li>
             </ol>
         </nav>
-        <h1 class="fw-bold mb-2 display-6">Rencana Rute Perjalanan Bali</h1>
+        <h1 class="fw-bold mb-2 display-6">{{ __('calculator.title') }}</h1>
         <p class="text-white-50 mb-0 lead fs-6">
-            Pilih titik jemput dan tentukan hingga 5 destinasi wisata impian Anda untuk menghitung total jarak dan estimasi durasi rute.
+            {{ __('calculator.subtitle') }}
         </p>
     </div>
 </section>
@@ -35,26 +35,26 @@
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <h5 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
                                 <span class="badge rounded-circle p-2 bg-success text-white" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem;">P</span>
-                                <span>Titik Jemput (Pickup)</span>
+                                <span>{{ __('calculator.pickup_step') }}</span>
                             </h5>
                             <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1 small" id="pickup-status-badge">
-                                <i class="bi bi-check-circle me-1"></i>Siap
+                                <i class="bi bi-check-circle me-1"></i>{{ __('calculator.pickup_ready') }}
                             </span>
                         </div>
 
                         <!-- Pickup Mode Tabs -->
                         <div class="btn-group w-100 mb-3" role="group" aria-label="Mode Pemilihan Titik Jemput">
                             <input type="radio" class="btn-check" name="pickup_mode" id="mode_preset" value="preset" checked autocomplete="off">
-                            <label class="btn btn-outline-primary btn-sm" for="mode_preset">Lokasi Populer Bali</label>
+                            <label class="btn btn-outline-primary btn-sm" for="mode_preset">{{ __('calculator.pickup_mode_preset') }}</label>
 
                             <input type="radio" class="btn-check" name="pickup_mode" id="mode_manual" value="manual" autocomplete="off">
-                            <label class="btn btn-outline-secondary btn-sm" for="mode_manual">Input Koordinat (Dev)</label>
+                            <label class="btn btn-outline-secondary btn-sm" for="mode_manual">{{ __('calculator.pickup_mode_manual') }}</label>
                         </div>
 
                         <!-- Mode 1: Preset Dropdown -->
                         <div id="section-pickup-preset">
                             <label for="pickup_preset_select" class="form-label small fw-semibold text-muted">
-                                Pilih Lokasi Penjemputan:
+                                {{ __('calculator.pickup_popular') }}
                             </label>
                             <select id="pickup_preset_select" class="form-select" aria-label="Pilih lokasi jemput">
                                 @foreach($presetPickups as $index => $preset)
@@ -71,11 +71,11 @@
                         <!-- Mode 2: Manual Coordinates (Development Testing) -->
                         <div id="section-pickup-manual" class="d-none">
                             <div class="alert alert-warning py-2 px-3 small mb-3">
-                                <i class="bi bi-cone-striped me-1"></i> Mode pengujian koordinat manual.
+                                <i class="bi bi-cone-striped me-1"></i> {{ __('calculator.pickup_manual_note') }}
                             </div>
                             <div class="mb-2">
-                                <label for="manual_pickup_name" class="form-label small fw-semibold text-muted">Nama Lokasi Jemput:</label>
-                                <input type="text" id="manual_pickup_name" class="form-control form-control-sm" placeholder="Contoh: Hotel Villa Seminyak">
+                                <label for="manual_pickup_name" class="form-label small fw-semibold text-muted">{{ __('calculator.pickup_location_name') }}</label>
+                                <input type="text" id="manual_pickup_name" class="form-control form-control-sm" placeholder="e.g. Hotel Villa Seminyak">
                             </div>
                             <div class="row g-2 mb-2">
                                 <div class="col-6">
@@ -88,7 +88,7 @@
                                 </div>
                             </div>
                             <button type="button" id="btn-apply-manual-pickup" class="btn btn-sm btn-outline-primary w-100" aria-label="Terapkan koordinat manual titik jemput">
-                                Terapkan Titik Jemput
+                                {{ __('calculator.pickup_manual_apply') }}
                             </button>
                         </div>
                     </div>
@@ -100,20 +100,20 @@
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <h5 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
                                 <i class="bi bi-pin-map-fill text-danger"></i>
-                                <span>Pilih Tempat Wisata</span>
+                                <span>{{ __('calculator.destinations_step') }}</span>
                             </h5>
                             <span class="badge bg-light text-secondary border small px-2 py-1" id="destination-count-badge">
-                                <span id="selected-dest-count">0</span> / 5 Tujuan
+                                <span id="selected-dest-count">0</span> / 5
                             </span>
                         </div>
 
                         @if($destinations->count() > 0)
                             <label for="destination_select" class="form-label small fw-semibold text-muted">
-                                Cari dan Tambahkan ke Rute:
+                                {{ __('calculator.destination_select') }}:
                             </label>
                             <div class="input-group mb-2">
                                 <select id="destination_select" class="form-select" aria-label="Pilih destinasi wisata">
-                                    <option value="">-- Pilih Tempat Wisata --</option>
+                                    <option value="">{{ __('calculator.destination_select') }}</option>
                                     @foreach($destinations as $dest)
                                         <option value="{{ $dest['id'] }}">
                                             {{ $dest['name'] }} ({{ $dest['region'] ?: 'Bali' }})
@@ -122,15 +122,15 @@
                                 </select>
                                 <button type="button" id="btn-add-destination" class="btn btn-brand-primary d-inline-flex align-items-center gap-1" aria-label="Tambahkan tempat wisata terpilih">
                                     <i class="bi bi-plus-lg"></i>
-                                    <span>Tambah</span>
+                                    <span>{{ __('calculator.destination_add') }}</span>
                                 </button>
                             </div>
                             <div class="form-text small">
-                                Anda dapat memilih hingga maksimal 5 tujuan wisata dalam satu rencana perjalanan.
+                                {{ __('calculator.destination_limit_notice') }}
                             </div>
                         @else
                             <div class="alert alert-info py-2 px-3 small mb-0">
-                                <i class="bi bi-info-circle me-1"></i> Belum ada tempat wisata aktif dengan koordinat valid. Silakan hubungi admin.
+                                <i class="bi bi-info-circle me-1"></i> {{ __('destinations.empty') }}
                             </div>
                         @endif
                     </div>
@@ -141,10 +141,10 @@
                     <div class="card-body p-4">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <h6 class="fw-bold text-dark mb-0">
-                                Runtutan Perjalanan (<span id="route-items-count">0</span> Tujuan)
+                                {{ __('calculator.itinerary_step') }} (<span id="route-items-count">0</span>)
                             </h6>
                             <button type="button" id="btn-clear-all" class="btn btn-link text-danger text-decoration-none p-0 small" style="font-size: 0.8rem;" aria-label="Kosongkan seluruh daftar rute tujuan">
-                                Kosongkan Rute
+                                {{ __('calculator.clear_route') }}
                             </button>
                         </div>
 
@@ -153,33 +153,33 @@
                             <!-- Empty State -->
                             <div id="destinations-empty-state" class="text-center py-4 px-2 border rounded-3 bg-light">
                                 <i class="bi bi-compass display-6 text-muted opacity-50 mb-2 d-block"></i>
-                                <span class="text-dark fw-semibold small d-block">Belum ada tujuan wisata dipilih</span>
-                                <span class="text-muted" style="font-size: 0.75rem;">Pilih tempat wisata dari daftar di atas untuk menambahkan rute perjalanan.</span>
+                                <span class="text-dark fw-semibold small d-block">{{ __('calculator.empty_itinerary') }}</span>
+                                <span class="text-muted" style="font-size: 0.75rem;">{{ __('calculator.empty_itinerary_desc') }}</span>
                             </div>
                         </div>
 
                         <!-- Passenger Count Selector -->
                         <div class="mb-3 pt-2 border-top">
                             <label for="passenger_count" class="form-label small fw-semibold text-dark d-flex align-items-center justify-content-between">
-                                <span><i class="bi bi-people-fill text-brand-primary me-1"></i> Jumlah Penumpang:</span>
-                                <span class="badge bg-light text-muted border fw-normal" style="font-size: 0.75rem;">1-12 Orang</span>
+                                <span><i class="bi bi-people-fill text-brand-primary me-1"></i> {{ __('calculator.passenger_count_label') }}</span>
+                                <span class="badge bg-light text-muted border fw-normal" style="font-size: 0.75rem;">{{ __('calculator.passenger_range') }}</span>
                             </label>
                             <select id="passenger_count" class="form-select form-select-sm" aria-label="Pilih jumlah penumpang">
-                                <option value="1" selected>1 Penumpang (Termasuk Biaya Dasar)</option>
-                                <option value="2">2 Penumpang (+1 Ekstra)</option>
-                                <option value="3">3 Penumpang (+2 Ekstra)</option>
-                                <option value="4">4 Penumpang (+3 Ekstra)</option>
-                                <option value="5">5 Penumpang (+4 Ekstra)</option>
-                                <option value="6">6 Penumpang (+5 Ekstra)</option>
-                                <option value="7">7 Penumpang (+6 Ekstra)</option>
-                                <option value="8">8 Penumpang (+7 Ekstra)</option>
-                                <option value="9">9 Penumpang (+8 Ekstra)</option>
-                                <option value="10">10 Penumpang (+9 Ekstra)</option>
-                                <option value="11">11 Penumpang (+10 Ekstra)</option>
-                                <option value="12">12 Penumpang (+11 Ekstra)</option>
+                                <option value="1" selected>{{ __('calculator.passenger_option_single') }}</option>
+                                <option value="2">{{ __('calculator.passenger_option_extra', ['count' => 2, 'extra' => 1]) }}</option>
+                                <option value="3">{{ __('calculator.passenger_option_extra', ['count' => 3, 'extra' => 2]) }}</option>
+                                <option value="4">{{ __('calculator.passenger_option_extra', ['count' => 4, 'extra' => 3]) }}</option>
+                                <option value="5">{{ __('calculator.passenger_option_extra', ['count' => 5, 'extra' => 4]) }}</option>
+                                <option value="6">{{ __('calculator.passenger_option_extra', ['count' => 6, 'extra' => 5]) }}</option>
+                                <option value="7">{{ __('calculator.passenger_option_extra', ['count' => 7, 'extra' => 6]) }}</option>
+                                <option value="8">{{ __('calculator.passenger_option_extra', ['count' => 8, 'extra' => 7]) }}</option>
+                                <option value="9">{{ __('calculator.passenger_option_extra', ['count' => 9, 'extra' => 8]) }}</option>
+                                <option value="10">{{ __('calculator.passenger_option_extra', ['count' => 10, 'extra' => 9]) }}</option>
+                                <option value="11">{{ __('calculator.passenger_option_extra', ['count' => 11, 'extra' => 10]) }}</option>
+                                <option value="12">{{ __('calculator.passenger_option_extra', ['count' => 12, 'extra' => 11]) }}</option>
                             </select>
                             <div class="form-text small" style="font-size: 0.75rem;">
-                                Penumpang pertama tercakup dalam tarif dasar. Penumpang ke-2 dan seterusnya dikenakan tarif ekstra per orang.
+                                {{ __('calculator.passenger_hint') }}
                             </div>
                         </div>
 
@@ -189,7 +189,7 @@
                                 class="btn btn-brand-primary w-100 py-2 rounded-pill d-inline-flex align-items-center justify-content-center gap-2 fw-semibold shadow-sm"
                                 disabled>
                             <i class="bi bi-arrow-repeat spin d-none" id="calculate-spinner"></i>
-                            <span id="calculate-btn-text">Hitung Rute & Estimasi Biaya</span>
+                            <span id="calculate-btn-text">{{ __('calculator.calculate_button') }}</span>
                             <i class="bi bi-arrow-right" id="calculate-arrow-icon"></i>
                         </button>
                     </div>
@@ -201,11 +201,8 @@
                         <div class="d-flex align-items-center justify-content-between">
                             <h5 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
                                 <i class="bi bi-check-circle-fill text-success fs-5"></i>
-                                <span>Hasil Rute & Estimasi Biaya</span>
+                                <span>{{ __('calculator.route_summary_title') }}</span>
                             </h5>
-                            <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1 small">
-                                Rute & Tarif Aktif
-                            </span>
                         </div>
                     </div>
                     <div class="card-body p-4">
@@ -213,13 +210,13 @@
                         <div class="row g-3 mb-4">
                             <div class="col-6">
                                 <div class="p-3 bg-light rounded-3 text-center border">
-                                    <span class="text-muted small d-block mb-1">Total Jarak Tempuh</span>
+                                    <span class="text-muted small d-block mb-1">{{ __('calculator.total_distance') }}</span>
                                     <h4 class="fw-bold text-brand-primary mb-0" id="res-total-distance">0 km</h4>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="p-3 bg-light rounded-3 text-center border">
-                                    <span class="text-muted small d-block mb-1">Estimasi Durasi</span>
+                                    <span class="text-muted small d-block mb-1">{{ __('calculator.estimated_duration') }}</span>
                                     <h4 class="fw-bold text-brand-primary mb-0" id="res-total-duration">0 m</h4>
                                 </div>
                             </div>
@@ -229,71 +226,91 @@
                         <div class="card border border-primary-subtle rounded-3 bg-light mb-4 overflow-hidden">
                             <div class="card-header bg-primary text-white py-2 px-3 d-flex align-items-center justify-content-between">
                                 <span class="fw-semibold small d-flex align-items-center gap-1">
-                                    <i class="bi bi-cash-stack"></i> Estimasi Biaya Sewa Tour
+                                    <i class="bi bi-cash-stack"></i> {{ __('calculator.estimated_price') }}
                                 </span>
-                                <span class="badge bg-white text-primary small">Estimasi Awal</span>
                             </div>
                             <div class="card-body p-3">
                                 <div class="d-flex align-items-baseline justify-content-between mb-3 border-bottom pb-2">
-                                    <span class="text-dark fw-bold">Total Estimasi:</span>
+                                    <span class="text-dark fw-bold">Total:</span>
                                     <h3 class="fw-bold text-brand-primary mb-0" id="res-pricing-total">Rp0</h3>
                                 </div>
 
                                 <!-- Rincian Perhitungan Biaya -->
                                 <h6 class="fw-bold text-dark mb-2 small text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">
-                                    Rincian Perhitungan Tarif:
+                                    {{ __('calculator.price_breakdown_title') }}:
                                 </h6>
                                 <div class="d-flex flex-column gap-1 small text-secondary mb-3">
                                     <div class="d-flex justify-content-between">
-                                        <span>Biaya Dasar Armada (<span id="res-package-name">Paket Standar</span>):</span>
+                                        <span>{{ __('calculator.base_price') }} (<span id="res-package-name">Standard</span>):</span>
                                         <span class="fw-semibold text-dark" id="res-base-cost">Rp0</span>
                                     </div>
                                     <div class="d-flex justify-content-between">
-                                        <span>Biaya Jarak Tempuh (<span id="res-distance-calc-desc">0 km</span>):</span>
+                                        <span>{{ __('calculator.distance_price', ['distance' => '']) }}<span id="res-distance-calc-desc">0 km</span>:</span>
                                         <span class="fw-semibold text-dark" id="res-distance-cost">Rp0</span>
                                     </div>
                                     <div class="d-flex justify-content-between" id="res-passenger-row">
-                                        <span>Biaya Penumpang Ekstra (<span id="res-passenger-calc-desc">0 orang</span>):</span>
+                                        <span>{{ __('calculator.extra_passengers_price', ['count' => '']) }}<span id="res-passenger-calc-desc">0</span>:</span>
                                         <span class="fw-semibold text-dark" id="res-passenger-cost">Rp0</span>
                                     </div>
                                     <div class="d-flex justify-content-between">
-                                        <span>Biaya Parkir & Tol:</span>
+                                        <span>{{ __('calculator.toll_parking_estimate') }}</span>
                                         <span class="fw-semibold text-dark" id="res-additional-cost">Rp0</span>
                                     </div>
                                     <div class="d-flex justify-content-between border-top pt-1 mt-1 fw-semibold text-dark">
-                                        <span>Subtotal Biaya:</span>
+                                        <span>Subtotal:</span>
                                         <span id="res-subtotal-cost">Rp0</span>
                                     </div>
                                 </div>
 
                                 <!-- Minimum Price Alert (Conditional) -->
                                 <div id="res-minimum-price-notice" class="alert alert-warning py-1 px-2 small mb-2 d-none" style="font-size: 0.75rem;">
-                                    <i class="bi bi-info-circle-fill me-1"></i> Berlaku ketentuan <strong>Tarif Minimum Layanan</strong> (<span id="res-minimum-price-val">Rp0</span>).
+                                    <i class="bi bi-info-circle-fill me-1"></i> {{ __('calculator.minimum_price_notice') }} (<span id="res-minimum-price-val">Rp0</span>).
                                 </div>
 
                                 <!-- Disclaimer Resmi -->
                                 <p class="text-muted mb-0 small" style="font-size: 0.75rem; line-height: 1.4;" id="res-pricing-disclaimer">
-                                    <i class="bi bi-shield-check me-1"></i> Harga ini merupakan estimasi awal dan dapat berubah berdasarkan kesepakatan layanan.
+                                    <i class="bi bi-shield-check me-1"></i> {{ __('calculator.disclaimer') }}
                                 </p>
                             </div>
                         </div>
 
                         <!-- Per-Leg / Segmen Details -->
                         <h6 class="fw-bold text-dark mb-3 small text-uppercase tracking-wider">
-                            Rincian Segmen Perjalanan:
+                            {{ __('calculator.itinerary_step') }}:
                         </h6>
                         <div id="res-legs-list" class="d-flex flex-column gap-2 mb-3">
                             <!-- Populated by JS -->
                         </div>
 
-                        <!-- Booking Placeholder Button (Cluster 10 Batasan: Belum ada form booking/WhatsApp) -->
-                        <div class="p-3 bg-light rounded-3 border text-center mt-3">
-                            <button type="button" class="btn btn-outline-secondary w-100 rounded-pill py-2 disabled" aria-disabled="true">
-                                <i class="bi bi-calendar2-check me-1"></i> Lanjut Pemesanan <span class="badge bg-secondary ms-1">Segera Hadir</span>
-                            </button>
-                            <span class="text-muted d-block mt-2" style="font-size: 0.75rem;">
-                                Fitur pemesanan online dan konfirmasi WhatsApp akan dibuka pada tahap selanjutnya.
-                            </span>
+                        <!-- Booking Section -->
+                        <div class="p-3 bg-light rounded-3 border mt-3">
+                            <h6 class="fw-bold text-dark mb-2 small text-uppercase"><i class="bi bi-whatsapp text-success me-1"></i> {{ __('booking.title') }}</h6>
+                            <p class="text-muted small mb-3">{{ __('booking.subtitle') }}</p>
+                            <form id="booking-whatsapp-form">
+                                <div class="mb-2">
+                                    <label class="form-label small fw-semibold text-muted">{{ __('booking.customer_name') }}</label>
+                                    <input type="text" id="booking_name" class="form-control form-control-sm" placeholder="{{ __('booking.customer_name_placeholder') }}" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label small fw-semibold text-muted">{{ __('booking.whatsapp_number') }}</label>
+                                    <input type="tel" id="booking_phone" class="form-control form-control-sm" placeholder="{{ __('booking.whatsapp_placeholder') }}" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label small fw-semibold text-muted">{{ __('booking.travel_date') }}</label>
+                                    <input type="date" id="booking_date" class="form-control form-control-sm" required min="{{ date('Y-m-d') }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-semibold text-muted">{{ __('booking.notes') }}</label>
+                                    <textarea id="booking_notes" class="form-control form-control-sm" rows="2" placeholder="{{ __('booking.notes_placeholder') }}"></textarea>
+                                </div>
+                                <button type="submit" id="btn-submit-booking" class="btn btn-success w-100 rounded-pill py-2 fw-semibold d-inline-flex align-items-center justify-content-center gap-2 shadow-sm">
+                                    <i class="bi bi-whatsapp fs-5"></i>
+                                    <span>{{ __('booking.submit_button') }}</span>
+                                </button>
+                                <span class="text-muted text-center d-block mt-2" style="font-size: 0.72rem;">
+                                    {{ __('booking.redirect_hint') }}
+                                </span>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -306,14 +323,14 @@
                     <div class="card-header bg-white border-bottom p-3 d-flex align-items-center justify-content-between flex-wrap gap-2">
                         <div class="d-flex align-items-center gap-2">
                             <i class="bi bi-map-fill text-brand-primary fs-5"></i>
-                            <span class="fw-bold text-dark small">Peta Rute Interaktif</span>
+                            <span class="fw-bold text-dark small">{{ __('calculator.map_title') }}</span>
                         </div>
                         <div class="d-flex align-items-center gap-2 small">
                             <span class="badge bg-light text-dark border">
-                                <span class="text-success fw-bold">P</span> = Jemput
+                                <span class="text-success fw-bold">P</span> = {{ __('calculator.legend_pickup') }}
                             </span>
                             <span class="badge bg-light text-dark border">
-                                <span class="text-danger fw-bold">1..5</span> = Wisata
+                                <span class="text-danger fw-bold">1..5</span> = {{ __('calculator.legend_destinations') }}
                             </span>
                         </div>
                     </div>
@@ -333,15 +350,14 @@
                                 <div class="mb-3 text-brand-secondary">
                                     <i class="bi bi-geo-alt-fill display-4"></i>
                                 </div>
-                                <h5 class="fw-bold text-dark mb-2">Mode Rute Berbasis Daftar</h5>
+                                <h5 class="fw-bold text-dark mb-2">{{ __('calculator.map_fallback_title') }}</h5>
                                 <p class="text-muted small mb-3 lh-base">
-                                    Pratinjau peta Google Maps interaktif sedang tidak aktif (kunci API browser belum dikonfigurasi). 
-                                    Anda tetap dapat menghitung total jarak dan estimasi durasi melalui panel di samping.
+                                    {{ __('calculator.map_fallback_desc') }}
                                 </p>
                                 <div class="p-3 bg-light rounded text-start small border">
-                                    <div class="fw-semibold text-dark mb-1">Status Rute:</div>
+                                    <div class="fw-semibold text-dark mb-1">Status:</div>
                                     <div id="fallback-route-summary" class="text-muted">
-                                        Titik jemput siap, silakan tentukan tempat wisata.
+                                        {{ __('calculator.fallback_status_ready') }}
                                     </div>
                                 </div>
                             </div>
@@ -351,7 +367,7 @@
                     <!-- Map Footer Instructions -->
                     <div class="card-footer bg-white border-top p-3 small text-muted d-flex align-items-center justify-content-between flex-wrap gap-2">
                         <span>
-                            <i class="bi bi-info-circle me-1"></i> Jalur polyline rute jalan raya akan tergambar setelah Anda menekan tombol "Hitung Rute".
+                            <i class="bi bi-info-circle me-1"></i> Google Maps &copy; {{ date('Y') }}
                         </span>
                         <button type="button" id="btn-reset-map-view" class="btn btn-link text-decoration-none p-0 small text-brand-primary">
                             <i class="bi bi-arrows-fullscreen me-1"></i>Pusatkan Peta

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Wisata di ' . e($region->name) . ' - ' . e($brand['name']))
-@section('meta_description', 'Daftar destinasi dan tempat wisata populer di daerah ' . e($region->name) . ' Bali.')
+@section('title', e($region->name) . ' - ' . __('regions.title'))
+@section('meta_description', Str::limit(strip_tags($region->description ?? 'Explore tourist destinations in ' . $region->name . ' Bali.'), 150))
 
 @section('content')
 <!-- Header Detail Region -->
@@ -9,15 +9,15 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-2">
-                <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-white-50 text-decoration-none">Beranda</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('regions.index') }}" class="text-white-50 text-decoration-none">Daerah</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-white-50 text-decoration-none">{{ __('nav.home') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('regions.index') }}" class="text-white-50 text-decoration-none">{{ __('nav.regions') }}</a></li>
                 <li class="breadcrumb-item active text-brand-secondary" aria-current="page">{{ $region->name }}</li>
             </ol>
         </nav>
 
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
             <div>
-                <h1 class="fw-bold mb-1 display-6">Wisata Daerah {{ $region->name }}</h1>
+                <h1 class="fw-bold mb-1 display-6">{{ $region->name }}</h1>
                 @if (!empty($region->regency))
                     <span class="badge bg-white bg-opacity-15 text-white-50 small mb-2">
                         <i class="bi bi-building me-1"></i>{{ $region->regency }}
@@ -32,7 +32,7 @@
             <div>
                 <a href="{{ route('regions.index') }}" class="btn btn-outline-light btn-sm rounded-pill px-3 py-2 d-inline-flex align-items-center gap-2">
                     <i class="bi bi-arrow-left"></i>
-                    <span>Semua Daerah</span>
+                    <span>{{ __('regions.all_regions') }}</span>
                 </a>
             </div>
         </div>
@@ -43,8 +43,8 @@
 <section class="py-5">
     <div class="container">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h4 class="fw-bold text-dark mb-0">Destinasi Populer di {{ $region->name }}</h4>
-            <span class="text-muted small">Menampilkan {{ $destinations->total() }} tempat wisata</span>
+            <h4 class="fw-bold text-dark mb-0">{{ __('regions.destinations_in_region', ['region' => $region->name]) }}</h4>
+            <span class="text-muted small">{{ __('regions.showing_count', ['count' => $destinations->total()]) }}</span>
         </div>
 
         @if ($destinations->count() > 0)
@@ -68,13 +68,13 @@
                 <div class="icon-circle bg-light text-muted mx-auto mb-3" style="width: 72px; height: 72px;">
                     <i class="bi bi-compass fs-1"></i>
                 </div>
-                <h4 class="fw-bold text-dark mb-2">Belum Ada Destinasi untuk Daerah Ini</h4>
+                <h4 class="fw-bold text-dark mb-2">{{ __('regions.empty') }}</h4>
                 <p class="text-muted small max-w-500 mx-auto mb-4">
-                    Saat ini destinasi wisata di {{ $region->name }} sedang dipersiapkan untuk katalog tour kami. Silakan jelajahi daerah lainnya.
+                    {{ __('regions.empty_desc') }}
                 </p>
                 <div>
                     <a href="{{ route('regions.index') }}" class="btn btn-brand-primary btn-sm rounded-pill px-4 py-2">
-                        Pilih Daerah Lain
+                        {{ __('regions.choose_other') }}
                     </a>
                 </div>
             </div>

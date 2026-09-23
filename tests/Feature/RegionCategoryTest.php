@@ -19,7 +19,7 @@ class RegionCategoryTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Badung');
         $response->assertSee('Gianyar');
-        $response->assertSee('Destinasi');
+        $response->assertSee(app()->getLocale() === 'id' ? 'Destinasi' : 'Attractions');
     }
 
     /**
@@ -97,7 +97,7 @@ class RegionCategoryTest extends TestCase
         $response = $this->get(route('regions.show', $emptyRegion->slug));
 
         $response->assertStatus(200);
-        $response->assertSee('Belum Ada Destinasi untuk Daerah Ini');
+        $response->assertSee(__('regions.empty'));
 
         $emptyRegion->delete();
     }
@@ -169,7 +169,7 @@ class RegionCategoryTest extends TestCase
         $response = $this->get(route('categories.show', $emptyCat->slug));
 
         $response->assertStatus(200);
-        $response->assertSee('Belum Ada Destinasi untuk Kategori Ini');
+        $response->assertSee(__('categories.empty'));
 
         $emptyCat->delete();
     }

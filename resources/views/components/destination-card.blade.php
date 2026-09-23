@@ -32,7 +32,7 @@
             <div class="destination-card-placeholder d-flex flex-column align-items-center justify-content-center text-white" 
                  style="height: 200px; background: linear-gradient(135deg, #1e293b 0%, #334155 100%);">
                 <i class="bi bi-geo-alt-fill fs-1 mb-1 text-brand-secondary opacity-75"></i>
-                <span class="small text-white-50">Foto Wisata Belum Tersedia</span>
+                <span class="small text-white-50">{{ __('destinations.no_photo') }}</span>
             </div>
         @endif
 
@@ -40,8 +40,7 @@
         <div class="position-absolute top-0 start-0 m-3 d-flex flex-wrap gap-1">
             @if ($showCategory && $destination->category)
                 <a href="{{ route('categories.show', $destination->category->slug) }}" 
-                   class="badge bg-brand-primary text-white text-decoration-none shadow-sm py-1 px-2"
-                   aria-label="Kategori: {{ $destination->category->name }}">
+                   class="badge bg-brand-primary text-white text-decoration-none shadow-sm py-1 px-2">
                     <i class="bi bi-tag-fill me-1 small text-brand-secondary"></i>
                     {{ $destination->category->name }}
                 </a>
@@ -49,8 +48,7 @@
 
             @if ($showRegion && $destination->region)
                 <a href="{{ route('regions.show', $destination->region->slug) }}" 
-                   class="badge bg-white text-dark text-decoration-none shadow-sm py-1 px-2 border"
-                   aria-label="Wilayah: {{ $destination->region->name }}">
+                   class="badge bg-white text-dark text-decoration-none shadow-sm py-1 px-2 border">
                     <i class="bi bi-pin-map-fill me-1 small text-danger"></i>
                     {{ $destination->region->name }}
                 </a>
@@ -62,8 +60,7 @@
     <div class="card-body d-flex flex-column p-4">
         <h5 class="card-title fw-bold mb-2">
             <a href="{{ route('destinations.show', $destination->slug) }}" 
-               class="text-dark text-decoration-none hover-primary"
-               aria-label="Lihat detail tempat wisata {{ $destination->name }}">
+               class="text-dark text-decoration-none hover-primary">
                 {{ $destination->name }}
             </a>
         </h5>
@@ -81,12 +78,11 @@
 
         <div class="pt-3 border-top d-flex align-items-center justify-content-between mt-auto">
             <a href="{{ route('destinations.show', $destination->slug) }}" 
-               class="btn btn-sm btn-outline-primary rounded-pill px-3 py-1"
-               aria-label="Lihat informasi dan detail {{ $destination->name }}">
-                Lihat Detail <i class="bi bi-arrow-right ms-1"></i>
+               class="btn btn-sm btn-outline-primary rounded-pill px-3 py-1">
+                {{ __('destinations.view_detail') }} <i class="bi bi-arrow-right ms-1"></i>
             </a>
             <span class="text-muted small">
-                Urutan #{{ $destination->display_order }}
+                {{ __('destinations.display_order', ['order' => $destination->display_order]) }}
             </span>
         </div>
     </div>

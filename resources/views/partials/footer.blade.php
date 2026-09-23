@@ -30,26 +30,26 @@
 
             <!-- Navigation Links Column -->
             <div class="col-lg-3 col-md-6">
-                <h6 class="fw-bold text-brand-secondary mb-3 text-uppercase small tracking-wide">Navigasi</h6>
+                <h6 class="fw-bold text-brand-secondary mb-3 text-uppercase small tracking-wide">{{ __('footer.navigation_title') }}</h6>
                 <ul class="list-unstyled text-white-50 small d-flex flex-column gap-2 mb-0">
                     <li>
                         <a href="{{ route('home') }}" class="text-white-50 text-decoration-none hover-text-white">
-                            Beranda
+                            {{ __('nav.home') }}
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('regions.index') }}" class="text-white-50 text-decoration-none hover-text-white">
-                            Daftar Daerah
+                            {{ __('nav.regions') }}
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('categories.index') }}" class="text-white-50 text-decoration-none hover-text-white">
-                            Kategori Wisata
+                            {{ __('nav.categories') }}
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('calculator.index') }}" class="text-white-50 text-decoration-none hover-text-white">
-                            Kalkulator Rute & Tarif
+                            {{ __('nav.calculator') }}
                         </a>
                     </li>
                 </ul>
@@ -57,7 +57,7 @@
 
             <!-- Contact & Service Information Column -->
             <div class="col-lg-4 col-md-12">
-                <h6 class="fw-bold text-brand-secondary mb-3 text-uppercase small tracking-wide">Informasi Layanan</h6>
+                <h6 class="fw-bold text-brand-secondary mb-3 text-uppercase small tracking-wide">{{ __('footer.service_info_title') }}</h6>
                 <p class="text-white-50 small mb-2 d-flex align-items-center gap-2">
                     <i class="bi bi-geo-alt-fill text-brand-secondary"></i>
                     <span>Bali, Indonesia</span>
@@ -70,7 +70,7 @@
                 @endif
                 <p class="text-white-50 small mb-0 d-flex align-items-center gap-2">
                     <i class="bi bi-clock-fill text-brand-secondary"></i>
-                    <span>Jam Operasional: 07.00 - 22.00 WITA</span>
+                    <span>{{ __('footer.operating_hours') }}</span>
                 </p>
             </div>
         </div>
@@ -81,12 +81,12 @@
         <div class="row align-items-center g-2">
             <div class="col-md-6 text-center text-md-start">
                 <p class="text-white-50 small mb-0">
-                    &copy; {{ date('Y') }} <strong class="text-white">{{ $brand['name'] }}</strong>. Seluruh hak cipta dilindungi.
+                    &copy; {{ date('Y') }} <strong class="text-white">{{ $brand['name'] }}</strong>. {{ __('footer.all_rights_reserved') }}
                 </p>
             </div>
             <div class="col-md-6 text-center text-md-end">
                 <span class="badge bg-white bg-opacity-10 text-white-50 border border-white border-opacity-10 px-2 py-1 small">
-                    Platform Tour Bali MVP
+                    {{ __('hero.badge') }}
                 </span>
             </div>
         </div>

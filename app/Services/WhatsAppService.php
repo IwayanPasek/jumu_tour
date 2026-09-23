@@ -67,17 +67,23 @@ class WhatsAppService
     }
 
     /**
-     * Membangun template pesan pemesanan tour yang rapi, informatif, dan aman.
+     * Membangun template pesan pemesanan tour yang rapi, informatif, dan bilingual (EN / ID).
      *
      * @param array $bookingData Data pemesanan (nama, tanggal, pickup, tujuan, rincian biaya, dsb)
+     * @param string|null $locale Kode bahasa ('en' atau 'id', default membaca App::getLocale())
      * @return string
      */
-    public function formatTourBookingMessage(array $bookingData): string
+    public function formatTourBookingMessage(array $bookingData, ?string $locale = null): string
     {
-        $brand = BrandSetting::getActive();
-        $brandName = $brand ? $brand->brand_name : 'Jumu Bali Tour';
+        $currentLocale = $locale ?: \Illuminate\Support\Facades\App::getLocale();
+        if (! in_array($currentLocale, ['en', 'id'], true)) {
+            $currentLocale = 'en';
+        }
 
-        $customerName = strip_tags($bookingData['customer_name'] ?? 'Pelanggan');
+        $brand = BrandSetting::getActive();
+        $brandName = $brand ? $brand->brand_name : 'Bali Tour Service';
+
+        $customerName = strip_tags($bookingData['customer_name'] ?? ($currentLocale === 'id' ? 'Pelanggan' : 'Customer'));
         $tourDate = strip_tags($bookingData['tour_date'] ?? date('d-m-Y'));
         $passengers = (int) ($bookingData['passenger_count'] ?? 1);
         $pickupName = strip_tags($bookingData['pickup_name'] ?? '-');
@@ -90,22 +96,37 @@ class WhatsAppService
         $destinationsList = '';
         foreach ($destinations as $index => $dest) {
             $num = $index + 1;
-            $destName = is_array($dest) ? ($dest['name'] ?? 'Tujuan ' . $num) : (string) $dest;
+            $destName = is_array($dest) ? ($dest['name'] ?? ($currentLocale === 'id' ? 'Tujuan ' . $num : 'Stop ' . $num)) : (string) $dest;
             $destinationsList .= "  {$num}. " . strip_tags($destName) . "\n";
         }
 
-        $message = "Halo {$brandName}, saya ingin melakukan reservasi sewa tour Bali dengan rincian berikut:\n\n";
-        $message .= "👤 Nama Pemesan: {$customerName}\n";
-        $message .= "📅 Tanggal Tour: {$tourDate}\n";
-        $message .= "👥 Jumlah Penumpang: {$passengers} Orang\n";
-        $message .= "📍 Titik Penjemputan: {$pickupName}\n\n";
-        $message .= "🗺️ Rencana Destinasi Wisata:\n";
-        $message .= $destinationsList . "\n";
-        $message .= "🚗 Total Jarak: {$distanceKm} km\n";
-        $message .= "⏱️ Estimasi Waktu: {$durationText}\n";
-        $message .= "💰 Estimasi Biaya: {$estimatedPrice}\n";
-        $message .= "📝 Catatan Tambahan: {$notes}\n\n";
-        $message .= "Mohon informasi ketersediaan armada dan konfirmasi jadwalnya. Terima kasih!";
+        if ($currentLocale === 'en') {
+            $message = "Hello {$brandName}, I would like to book a private tour with the following details:\n\n";
+            $message .= "👤 Customer Details: {$customerName}\n";
+            $message .= "📅 Travel Date: {$tourDate}\n";
+            $message .= "👥 Number of Passengers: {$passengers} Person(s)\n";
+            $message .= "📍 Pickup Location: {$pickupName}\n\n";
+            $message .= "🗺️ Planned Destinations:\n";
+            $message .= $destinationsList . "\n";
+            $message .= "🚗 Total Distance: {$distanceKm} km\n";
+            $message .= "⏱️ Estimated Duration: {$durationText}\n";
+            $message .= "💰 Estimated Price: {$estimatedPrice}\n";
+            $message .= "📝 Additional Notes: {$notes}\n\n";
+            $message .= "Note: Final price will be confirmed via WhatsApp based on schedule and vehicle availability. Thank you!";
+        } else {
+            $message = "Halo {$brandName}, saya ingin melakukan reservasi sewa tour Bali dengan rincian berikut:\n\n";
+            $message .= "👤 Data Pelanggan: {$customerName}\n";
+            $message .= "📅 Tanggal Perjalanan: {$tourDate}\n";
+            $message .= "👥 Jumlah Penumpang: {$passengers} Orang\n";
+            $message .= "📍 Lokasi Penjemputan: {$pickupName}\n\n";
+            $message .= "🗺️ Tujuan Perjalanan:\n";
+            $message .= $destinationsList . "\n";
+            $message .= "🚗 Total Jarak: {$distanceKm} km\n";
+            $message .= "⏱️ Detail Estimasi Perjalanan: {$durationText}\n";
+            $message .= "💰 Estimasi Biaya: {$estimatedPrice}\n";
+            $message .= "📝 Catatan Tambahan: {$notes}\n\n";
+            $message .= "Catatan: Harga final akan dikonfirmasi melalui WhatsApp. Terima kasih!";
+        }
 
         return $message;
     }

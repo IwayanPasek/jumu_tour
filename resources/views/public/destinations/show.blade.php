@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', $destination->name . ' - Tempat Wisata Bali')
-@section('meta_description', Str::limit(strip_tags($destination->description ?? 'Jelajahi keindahan ' . $destination->name . ' di Bali bersama layanan tour kami.'), 150))
+@section('title', $destination->name . ' - ' . __('destinations.title'))
+@section('meta_description', Str::limit(strip_tags($destination->description ?? 'Explore ' . $destination->name . ' in Bali with our private tour service.'), 150))
 
 @section('content')
 @php
@@ -24,8 +24,8 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-white-50 text-decoration-none">Beranda</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('destinations.index') }}" class="text-white-50 text-decoration-none">Tempat Wisata</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-white-50 text-decoration-none">{{ __('nav.home') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('destinations.index') }}" class="text-white-50 text-decoration-none">{{ __('nav.destinations') }}</a></li>
                 @if($destination->region)
                     <li class="breadcrumb-item"><a href="{{ route('regions.show', $destination->region->slug) }}" class="text-white-50 text-decoration-none">{{ $destination->region->name }}</a></li>
                 @endif
@@ -52,7 +52,7 @@
                         <div class="d-flex flex-column align-items-center justify-content-center text-white p-5" 
                              style="height: 320px; background: linear-gradient(135deg, #1e293b 0%, #334155 100%);">
                             <i class="bi bi-geo-alt-fill display-3 mb-2 text-brand-secondary opacity-75"></i>
-                            <span class="fs-5 text-white-50">Pratinjau Destinasi Wisata</span>
+                            <span class="fs-5 text-white-50">{{ __('destinations.no_photo') }}</span>
                         </div>
                     @endif
 
@@ -92,9 +92,9 @@
                         <hr class="my-4">
 
                         <!-- Description -->
-                        <h5 class="fw-bold text-dark mb-3">Tentang Tempat Wisata Ini</h5>
+                        <h5 class="fw-bold text-dark mb-3">{{ __('destinations.about_title') }}</h5>
                         <div class="text-secondary lh-lg mb-4" style="white-space: pre-line;">
-                            {{ $destination->description ?: 'Deskripsi lengkap tempat wisata ini akan segera ditambahkan.' }}
+                            {{ $destination->description ?: __('destinations.no_description') }}
                         </div>
                     </div>
                 </div>
@@ -104,13 +104,13 @@
             <div class="col-lg-4">
                 <!-- Location & Coordinates Card -->
                 <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
-                    <h5 class="fw-bold text-dark mb-3">Informasi Lokasi</h5>
+                    <h5 class="fw-bold text-dark mb-3">{{ __('destinations.location_info') }}</h5>
 
                     <ul class="list-unstyled mb-0 d-flex flex-column gap-3 small">
                         <li class="d-flex align-items-start gap-3">
                             <i class="bi bi-map text-primary fs-5"></i>
                             <div>
-                                <strong class="d-block text-dark">Wilayah Daerah</strong>
+                                <strong class="d-block text-dark">{{ __('destinations.region_area') }}</strong>
                                 <span class="text-muted">{{ $destination->region ? $destination->region->name : '-' }}</span>
                             </div>
                         </li>
@@ -118,7 +118,7 @@
                         <li class="d-flex align-items-start gap-3">
                             <i class="bi bi-compass text-danger fs-5"></i>
                             <div>
-                                <strong class="d-block text-dark">Titik Koordinat (Peta)</strong>
+                                <strong class="d-block text-dark">{{ __('destinations.coordinates') }}</strong>
                                 <div class="font-monospace text-muted mt-1">
                                     <span>Lat: {{ $destination->latitude }}</span><br>
                                     <span>Lng: {{ $destination->longitude }}</span>
@@ -129,8 +129,8 @@
                         <li class="d-flex align-items-start gap-3">
                             <i class="bi bi-car-front text-success fs-5"></i>
                             <div>
-                                <strong class="d-block text-dark">Layanan Transport & Tour</strong>
-                                <span class="text-muted">Siap dikunjungi dengan supir pribadi dan rute fleksibel.</span>
+                                <strong class="d-block text-dark">{{ __('destinations.transport_service') }}</strong>
+                                <span class="text-muted">{{ __('destinations.transport_desc') }}</span>
                             </div>
                         </li>
                     </ul>
@@ -138,14 +138,16 @@
                     <hr class="my-3">
 
                     <a href="{{ route('destinations.index') }}" class="btn btn-outline-secondary btn-sm w-100 rounded-pill py-2">
-                        <i class="bi bi-arrow-left me-1"></i>Kembali ke Katalog Destinasi
+                        <i class="bi bi-arrow-left me-1"></i>{{ __('destinations.back_to_catalog') }}
                     </a>
                 </div>
 
                 <!-- Related Destinations Nearby -->
                 @if($nearbyDestinations->count() > 0)
                     <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
-                        <h6 class="fw-bold text-dark mb-3">Wisata Lain di Sekitar {{ $destination->region ? $destination->region->name : 'Sini' }}</h6>
+                        <h6 class="fw-bold text-dark mb-3">
+                            {{ __('destinations.nearby_recommendations', ['region' => $destination->region ? $destination->region->name : 'Bali']) }}
+                        </h6>
                         <div class="d-flex flex-column gap-3">
                             @foreach($nearbyDestinations as $nearby)
                                 <a href="{{ route('destinations.show', $nearby->slug) }}" class="text-decoration-none group-item d-flex align-items-center gap-3">

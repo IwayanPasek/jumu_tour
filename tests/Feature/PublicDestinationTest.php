@@ -17,7 +17,7 @@ class PublicDestinationTest extends TestCase
         $response = $this->get(route('destinations.index'));
 
         $response->assertOk();
-        $response->assertSee('Destinasi & Tempat Wisata di Bali', false);
+        $response->assertSee(__('destinations.title'));
     }
 
     /**
