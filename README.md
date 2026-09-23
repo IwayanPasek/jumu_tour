@@ -195,3 +195,4 @@ php artisan test
 
 ## 12. Lisensi & Penggunaan Asset
 Aplikasi ini dikembangkan untuk MVP Website Layanan Tour Bali. Seluruh foto destinasi yang digunakan sebagai placeholder contoh ditujukan untuk tujuan demonstrasi MVP dan disarankan diganti dengan aset fotografi resmi milik pengelola layanan tour sebelum publikasi komersial.
+# jumu_tour
