@@ -1,0 +1,23 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # =========================================================================
+    # 1. KEAMANAN TINGKAT TINGGI: Blokir akses langsung ke file sensitif
+    # =========================================================================
+    RewriteRule ^(\.env|\.git|artisan|composer\.(json|lock)|package(-lock)?\.json|\.cpanel\.yml) - [F,L,NC]
+
+    # =========================================================================
+    # 2. KEAMANAN TINGKAT TINGGI: Blokir akses langsung ke folder inti Laravel
+    # =========================================================================
+    RewriteRule ^(app|bootstrap|config|database|resources|routes|storage|tests)/ - [F,L,NC]
+
+    # =========================================================================
+    # 3. REDIRECT TRANSPARAN KE FOLDER PUBLIC
+    # Mengarahkan seluruh trafik ke public/ tanpa menampilkan kata "public" di URL
+    # =========================================================================
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Cegah directory listing jika index file tidak ditemukan
+Options -Indexes
