@@ -14,7 +14,7 @@
 deployment:
   tasks:
     # 1. Tentukan path tujuan deployment (GANTI 'USERNAME' DENGAN USER CPANEL AKTUAL ANDA)
-    - export DEPLOYPATH=/home/USERNAME/tour-bali-app/
+    - export DEPLOYPATH=/home/jumutour/tour-bali-app/
 
     # 2. Sinkronkan source code aplikasi secara selektif tanpa menimpa .env production,
     #    tanpa menyalin .git, dan tanpa menyalin node_modules atau folder testing
