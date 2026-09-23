@@ -1,0 +1,31 @@
+---
+# ==============================================================================
+# cPanel Git Version Control Deployment Configuration
+# Proyek: Website Layanan Tour Bali (Jumu Bali Tour MVP)
+#
+# PANDUAN PENGGUNAAN:
+# 1. Sesuaikan variabel 'USERNAME' pada DEPLOYPATH di bawah dengan username cPanel Anda.
+# 2. Pastikan DEPLOYPATH menunjuk ke folder aplikasi di LUAR public_html, misalnya:
+#    /home/USERNAME/tour-bali-app/
+# 3. Document Root domain pada cPanel diarahkan ke:
+#    /home/USERNAME/tour-bali-app/public
+# ==============================================================================
+
+deployment:
+  tasks:
+    # 1. Tentukan path tujuan deployment (GANTI 'USERNAME' DENGAN USER CPANEL AKTUAL ANDA)
+    - export DEPLOYPATH=/home/USERNAME/tour-bali-app/
+
+    # 2. Sinkronkan source code aplikasi secara selektif tanpa menimpa .env production,
+    #    tanpa menyalin .git, dan tanpa menyalin node_modules atau folder testing
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/rsync -av --delete --exclude='.git*' --exclude='.env*' --exclude='node_modules' --exclude='tests' --exclude='storage/app/public/*' ./ $DEPLOYPATH
+
+    # 3. Pastikan direktori cache dan logs memiliki hak akses yang aman
+    - /bin/chmod -R 755 $DEPLOYPATH/storage
+    - /bin/chmod -R 755 $DEPLOYPATH/bootstrap/cache
+
+    # 4. Tugas Terkondisi (Hanya aktifkan jika Composer & PHP CLI tersedia pada cPanel):
+    # - /usr/local/bin/composer install --no-dev --optimize-autoloader --working-dir=$DEPLOYPATH
+    # - /usr/local/bin/php $DEPLOYPATH/artisan storage:link
+    # - /usr/local/bin/php $DEPLOYPATH/artisan optimize

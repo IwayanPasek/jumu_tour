@@ -1,0 +1,266 @@
+/* ==========================================================================
+   Sistem Tema Warna & Styling Global Jumu Bali Tour
+   ========================================================================== */
+
+:root {
+    /* Default / Fallback CSS Custom Properties */
+    --brand-primary: #0f172a;
+    --brand-secondary: #f59e0b;
+    --brand-accent: #0d9488;
+    --brand-text: #1e293b;
+    --brand-muted: #64748b;
+    --brand-surface: #ffffff;
+    --brand-dark-surface: #0b1120;
+    --brand-border: rgba(15, 23, 42, 0.08);
+
+    --bs-font-sans-serif: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    font-family: var(--bs-font-sans-serif);
+    color: var(--brand-text);
+    background-color: #f8fafc;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Color Utility Classes */
+.bg-brand-primary {
+    background-color: var(--brand-primary) !important;
+}
+
+.bg-brand-secondary {
+    background-color: var(--brand-secondary) !important;
+}
+
+.bg-brand-accent {
+    background-color: var(--brand-accent) !important;
+}
+
+.text-brand-primary {
+    color: var(--brand-primary) !important;
+}
+
+.text-brand-secondary {
+    color: var(--brand-secondary) !important;
+}
+
+.text-brand-accent {
+    color: var(--brand-accent) !important;
+}
+
+.text-brand-surface {
+    color: var(--brand-surface) !important;
+}
+
+.border-brand-primary {
+    border-color: var(--brand-primary) !important;
+}
+
+.border-brand-secondary {
+    border-color: var(--brand-secondary) !important;
+}
+
+/* Brand Identity & Logo Sizing */
+.brand-logo-img {
+    object-fit: contain;
+    display: inline-block;
+}
+
+.brand-logo-sm {
+    max-height: 28px;
+    width: auto;
+}
+
+.brand-logo-md {
+    max-height: 38px;
+    width: auto;
+}
+
+.brand-logo-lg {
+    max-height: 52px;
+    width: auto;
+}
+
+.brand-name-text {
+    font-size: 1.25rem;
+    line-height: 1.2;
+    transition: opacity 0.2s ease;
+}
+
+.brand-identity:hover .brand-name-text {
+    opacity: 0.9;
+}
+
+/* Custom Buttons */
+.btn-brand-primary {
+    background-color: var(--brand-primary);
+    color: #ffffff;
+    border: 1px solid var(--brand-primary);
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-brand-primary:hover,
+.btn-brand-primary:focus {
+    background-color: #1e293b;
+    color: #ffffff;
+    border-color: #1e293b;
+}
+
+.btn-brand-secondary {
+    background-color: var(--brand-secondary);
+    color: #0f172a;
+    border: 1px solid var(--brand-secondary);
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-brand-secondary:hover,
+.btn-brand-secondary:focus {
+    background-color: #d97706;
+    color: #ffffff;
+    border-color: #d97706;
+}
+
+/* Hero Section */
+.hero-wrapper {
+    background: linear-gradient(135deg, var(--brand-primary) 0%, #1e293b 65%, var(--brand-accent) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 75% 25%, rgba(245, 158, 11, 0.16) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+/* Cards & Placeholders */
+.feature-box {
+    background: #ffffff;
+    border: 1px solid var(--brand-border);
+    border-radius: 1rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.feature-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px -12px rgba(15, 23, 42, 0.1);
+}
+
+.icon-circle {
+    width: 52px;
+    height: 52px;
+    border-radius: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.destination-placeholder-card {
+    border-radius: 1rem;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid var(--brand-border);
+    transition: transform 0.2s ease;
+}
+
+.destination-placeholder-card:hover {
+    transform: translateY(-3px);
+}
+
+.destination-thumb-placeholder {
+    height: 180px;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Badges */
+.badge-soft-warning {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: #b45309;
+    font-weight: 600;
+}
+
+.badge-soft-secondary {
+    background-color: rgba(100, 116, 139, 0.15);
+    color: #475569;
+}
+
+/* ==========================================================================
+   Cluster 14: Responsive & Accessibility (WCAG 2.2) Utilities
+   ========================================================================== */
+
+/* Prevent unwanted horizontal overflow on viewports */
+html, body {
+    overflow-x: clip;
+}
+
+/* Skip link for keyboard navigation */
+.skip-to-content {
+    position: absolute;
+    top: -999px;
+    left: 1rem;
+    z-index: 1050;
+    padding: 0.5rem 1rem;
+    background-color: var(--brand-secondary);
+    color: #0f172a;
+    font-weight: 700;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.skip-to-content:focus {
+    top: 1rem;
+}
+
+/* Enhanced Focus Visibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--brand-secondary) !important;
+    outline-offset: 2px !important;
+}
+
+/* Responsive Map Container */
+.calculator-map-container {
+    width: 100%;
+    height: 360px;
+    min-height: 320px;
+    background-color: #f1f5f9;
+}
+
+@media (min-width: 992px) {
+    .calculator-map-container {
+        height: 540px;
+    }
+}
+
+/* Accessible minimum touch target size (44x44px where applicable) */
+.btn-touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
